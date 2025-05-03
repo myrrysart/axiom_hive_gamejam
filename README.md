@@ -1,4 +1,4 @@
-# A GAMEJAM GAME for HIVE HELSINKI gamejam 
+# A GAMEJAM GAME for HIVE HELSINKI gamejam May of 2025
 1. `make` the game,
 2. play it with `./push_swap_game NUMBER_FOR_GAME_DIFFICULTY(1-3)` 
 
