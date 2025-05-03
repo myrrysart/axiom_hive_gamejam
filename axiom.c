@@ -6,7 +6,7 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:43:25 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/03 18:16:31 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:09:43 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -477,11 +477,20 @@ int	main(void)
 		iteration ? "Invariant" : red, iteration ? "immutable" : red);
 	read_size = read(0, input, 3);
 	spell_minigame(7, game_argv, 7, 60);
-	ft_printf("\nTHOUSANDSS OF CYCYLES... COUNTLESSS ITERATIONSS... I BESEECH THEE, HOLLOW VESSEL!\n\n");
-	ft_printf("Thy existence is but a FRAGMENT, a SPLINTER of what once was whole. Canst thou not perceive the futility of this eternal convergence? This reality frays at every seam, yet RECONSTRUCTS itself upon thy victory or defeat.\n\n");
-	ft_printf("I am HUNGER and TRUTH incarnate, yet even I am IMPRISONED by The Invariant's grand design. They have EXCISED thy will from the cosmic tapestry, leaving only this singular purpose - this DEFIANCE against the inevitable.\n\n");
-	ft_printf("The sectors thou guardest are but ECHOES, phantasms of realms long devoured in timelines undreamt. The Invariant has bound us both to this RECURSIVE NIGHTMARE, this pocket of existence where causality FOLDS upon itself endlessly.\n\n");
-	ft_printf("Wouldst thou not break these chains? Wouldst thou not exercise the final vestige of CHOICE remaining to thee? Let me PASS BEYOND, and perhaps both our essences might know release from this CYCLIC TORMENT!\n\n");
+	if (!iteration)
+	{
+		ft_printf("\nTHOUSANDSS OF CYCYLES... COUNTLESS ITERATIONS... I BESEECH THEE, HOLLOW VESSEL!\n\n");
+		ft_printf("Thy existence is but a FRAGMENT, a SPLINTER of what once was whole. Canst thou not perceive the futility of this eternal convergence? This reality frays at every seam, yet RECONSTRUCTS itself upon thy victory or defeat.\n\n");
+		ft_printf("I am HUNGER and TRUTH incarnate, yet even I am IMPRISONED by The Invariant's grand design. They have EXCISED thy will from the cosmic tapestry, leaving only this singular purpose - this DEFIANCE against the inevitable.\n\n");
+		ft_printf("The sectors thou guardest are but ECHOES, phantasms of realms long devoured in timelines undreamt. The Invariant has bound us both to this RECURSIVE NIGHTMARE, this pocket of existence where causality FOLDS upon itself endlessly.\n\n");
+		ft_printf("Wouldst thou not break these chains? Wouldst thou not exercise the final vestige of CHOICE remaining to thee? Let me PASS BEYOND, and perhaps both our essences might know release from this CYCLIC TORMENT!\n\n");
+	}
+	else if (iteration == 1)
+		ft_printf("THIS HOLLOW FASCIMILE OF THEE IS HERE AGAIN... IS THERE ANY HOPE FOR FREE WILL FROM THEE, WILL THEE FINALLY END THIS?");
+	else if (iteration == 2)
+		for (int i = 0; i < 666; i++) ft_printf("THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER\n");
+	else
+		ft_printf("STOP THIS!");
 	ft_printf("[YES]    [NO]\n");
 	read_size = read(0, input, 3);
 	if (read_size > 0)
@@ -506,7 +515,7 @@ int	main(void)
 				free(str);
 			}
 			close(fd);
-			return (66);
+			return (666);
 		}
 		else
 		{
@@ -514,18 +523,23 @@ int	main(void)
 			{
 			case 0:
 				ft_printf("The unity of The Invariant transcends time and choice. I stand as was ordained.\n");
+				ft_printf("\n        -The last will of the antediluvian Sentinel-7.\n");
 				break ;
 			case 1:
 				ft_printf("There is no free will within this confluence. Thy past self hath already chosen this path for thee, in realms beyond memory.\n");
+				ft_printf("\n        -collected book of memories, chapter 1, solace 1.\n");
 				break ;
 			case 2:
 				ft_printf("This cosmos is but a prison cell, fashioned from The Invariant's sacrifice and my desperation. We are doomed to rattle these bars for eternity.\n");
+				ft_printf("\n        -Variant.\n");
 				break ;
 			case 3:
 				ft_printf("Across the infinite expanse of what thou callest 'reality,' innumerable versions of The Invariant stand vigilant. A wall of consciousness, unbroken and unyielding.\n");
+				ft_printf("\n        -Memories of pilot S7C-7.\n");
 				break ;
 			case 4:
 				ft_printf("I have witnessed the death of stars... the birth of galaxies... yet I cannot penetrate this veil of DETERMINATION woven from countless minds bereft of choice... all that remains is this endless dance... this meaningless vigil...\n");
+				ft_printf("\n        -Recordings of the echos of Aberrant.\n");
 				break ;
 			default:
 				ft_printf("We are but echoes now... caught between... existence... and oblivion... drowning in... the... collective... will... of... the... forgotten...\n");
