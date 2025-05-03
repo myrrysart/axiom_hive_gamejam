@@ -1,5 +1,6 @@
 # A GAMEJAM GAME for HIVE HELSINKI gamejam 
-
+`make` the game, then play it with `./push_swap_game` 
+There are multiple endings.
 # AXIOM: Ontological Defense Protocol
 **//BEGIN TRANSMISSION//**
 
