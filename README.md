@@ -1,6 +1,6 @@
 # A GAMEJAM GAME for HIVE HELSINKI gamejam 
 1. `make` the game,
-2. play it with `./push_swap_game` 
+2. play it with `./push_swap_game NUMBER_FOR_GAME_DIFFICULTY(1-3)` 
 
 There are multiple endings.
 
