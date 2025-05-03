@@ -6,7 +6,7 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:43:25 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/03 19:09:43 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/03 19:44:56 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -429,8 +429,84 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 	ft_printf("\nREPORT: MINOR PATTERN DISRUPTION ACHIEVED\n* ABERRANT COHERENCE: % d % % (⬇% d % %)\n * RESONANCE EFFICIENCY : NOMINAL\n * PHASE STATUS : REALIGNMENT INCOMPLETE\n ", 100 - spell->dmg, spell->dmg);
 	return (free_stacks(stack_a, stack_b, spell));
 }
+char	**create_game_args(int size, int min, int max, int sorted)
+{
+	char	**args;
+	int		*numbers;
+	int		i;
 
-int	main(void)
+	args = (char **)malloc(sizeof(char *) * (size + 2));
+	if (!args)
+		return (NULL);
+	args[0] = ft_strdup("program");
+	if (!args[0])
+	{
+		free(args);
+		return (NULL);
+	}
+	numbers = (int *)malloc(sizeof(int) * size);
+	if (!numbers)
+	{
+		free(args[0]);
+		free(args);
+		return (NULL);
+	}
+	srand(time(NULL));
+	for (i = 0; i < size; i++)
+	{
+		numbers[i] = min + rand() % (max - min + 1);
+	}
+	if (sorted)
+	{
+		int j, temp;
+		for (i = 0; i < size / 2; i++)
+		{
+			for (j = i + 1; j < size / 2; j++)
+			{
+				if (numbers[i] < numbers[j])
+				{
+					temp = numbers[i];
+					numbers[i] = numbers[j];
+					numbers[j] = temp;
+				}
+			}
+		}
+	}
+	for (i = 0; i < size; i++)
+	{
+		args[i + 1] = ft_itoa(numbers[i]);
+		if (!args[i + 1])
+		{
+			while (i >= 0)
+			{
+				free(args[i]);
+				i--;
+			}
+			free(args);
+			free(numbers);
+			return (NULL);
+		}
+	}
+	args[size + 1] = NULL;
+	free(numbers);
+	return (args);
+}
+
+void	free_game_args(char **args)
+{
+	int	i;
+
+	i = 0;
+	if (!args)
+		return ;
+	while (args[i])
+	{
+		free(args[i]);
+		i++;
+	}
+	free(args);
+}
+int	main(int argc, char **argv)
 {
 	unsigned int	seed;
 	int				fd;
@@ -438,19 +514,35 @@ int	main(void)
 	int				iteration;
 	char			*red;
 	char			input[4];
-	char			*game_argv[] = {"program", "2", "3", "1", "5", "42", "667",
-					NULL};
+	char			**game_argv;
 	int				read_size;
 	char			*str;
+	int				difficulty;
 
 	seed = time(0);
 	iteration = 0;
 	red = "<redacted>";
 	fd = open(".iterations", O_RDWR | O_CREAT, 0666);
-	if (fd < 0)
+	if (fd < 0 || argc != 2)
 	{
 		ft_printf("Error initializing ECHO system.\n");
 		return (1);
+	}
+	argc = 0;
+	switch((difficulty = ft_atoi(argv[1])))
+	{
+		case 1:
+			game_argv = create_game_args(5, 1, 10, 0);
+			break;
+		case 2:
+			game_argv = create_game_args(5, 1, 50, 0);
+			break;
+		case 3:
+			game_argv = create_game_args(20, 1, 100, 0);
+			break;
+		default:
+			ft_printf("Error initializing ECHO system.\n");
+			return (1);
 	}
 	read_size = read(fd, buffer, 9);
 	if (read_size > 0)
@@ -476,7 +568,16 @@ int	main(void)
 	ft_printf("REMINDER: The %s stands eternal. Your purpose is %s.\n\n",
 		iteration ? "Invariant" : red, iteration ? "immutable" : red);
 	read_size = read(0, input, 3);
-	spell_minigame(7, game_argv, 7, 60);
+	switch (difficulty)
+	{
+		case 1:
+			spell_minigame(7, game_argv, 5, 30);
+		case 2:
+			spell_minigame(12, game_argv, 10, 45);
+		case 3:
+			spell_minigame(22, game_argv, 15, 65);
+	}
+	read_size = read(0, input, 3);
 	if (!iteration)
 	{
 		ft_printf("\nTHOUSANDSS OF CYCYLES... COUNTLESS ITERATIONS... I BESEECH THEE, HOLLOW VESSEL!\n\n");
