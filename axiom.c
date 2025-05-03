@@ -6,7 +6,7 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:43:25 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/03 19:44:56 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/03 21:29:30 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,11 +310,6 @@ void	clear_screen(void)
 {
 	write(STDOUT_FILENO, "\033[2J\033[H", 7);
 }
-
-/*
-
-	* Calculates and displays damage feedback based on sorting progress and operations
- */
 void	display_damage_feedback(int stack_size, int ops, int time_limit)
 {
 	float	efficiency;
@@ -344,8 +339,6 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 	int		ops;
 	int		read_size;
 	t_spell	*spell;
-	time_t	start_time;
-	time_t	current_time;
 
 	clear_screen();
 	if (argc < 2)
@@ -365,7 +358,6 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 		return (free_stacks(stack_a, stack_b, NULL));
 	spell->dmg = damage;
 	spell->cost = 0;
-	start_time = time(NULL);
 	print_stacks(stack_a, stack_b);
 	display_damage_feedback(stack_a->size, ops, time_limit);
 	while (1)
@@ -375,8 +367,7 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 		if (read_size <= 0)
 			break ;
 		buffer[read_size - 1] = '\0';
-		current_time = time(NULL);
-		if (difftime(current_time, start_time) > time_limit)
+		if (ops > time_limit)
 		{
 			ft_printf("\n///OPERATOR ALERT///\nCOHERENCE THRESHOLD EXCEEDED\n* INTERFERENCE DETECTED: MAXIMUM TOLERABLE LEVELS\n* OPERATOR SYNCHRONIZATION: DEGRADING\n* ABERRANT COUNTERATTACK: IMMINENT\n");
 			break ;
@@ -407,38 +398,35 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 			operation(RR, stack_a, stack_b, &ops);
 		else
 			ft_printf("PROTOCOL ERROR: Invalid command\n");
+		read(0, NULL, 3);
 		clear_screen();
 		print_stacks(stack_a, stack_b);
 		display_damage_feedback(stack_a->size, ops, time_limit);
 		if (is_sorted(stack_a) && stack_b->size == 0)
 		{
 			spell->cost = ops;
-			if (ops < stack_a->size)
-				spell->dmg += stack_a->size * 3;
-			else if (ops < stack_a->size * 2)
-				spell->dmg += stack_a->size * 2;
-			else
-				spell->dmg += stack_a->size;
+			spell->dmg += stack_a->size * 2;
 			ft_printf("\n===PRIORITY FLASH TRAFFIC===\nMAJOR ONTOLOGICAL COLLAPSE DETECTED\n* ABERRANT COHERENCE: CRITICAL (⬇%d%%)\n* PATTERN DISSOLUTION: IMMINENT\n* DIMENSIONAL STABILITY: REESTABLISHING\n===END TRANSMISSION===\n",
 				spell->dmg);
 			return (free_stacks(stack_a, stack_b, spell));
 		}
 	}
 	spell->cost = ops;
-	spell->dmg += (stack_a->size / 2);
+	spell->dmg += (stack_a->size);
 	ft_printf("\nREPORT: MINOR PATTERN DISRUPTION ACHIEVED\n* ABERRANT COHERENCE: % d % % (⬇% d % %)\n * RESONANCE EFFICIENCY : NOMINAL\n * PHASE STATUS : REALIGNMENT INCOMPLETE\n ", 100 - spell->dmg, spell->dmg);
 	return (free_stacks(stack_a, stack_b, spell));
 }
-char	**create_game_args(int size, int min, int max, int sorted)
+char	**create_game_args(int size)
 {
 	char	**args;
 	int		*numbers;
 	int		i;
+	int		nums[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100};
 
 	args = (char **)malloc(sizeof(char *) * (size + 2));
 	if (!args)
 		return (NULL);
-	args[0] = ft_strdup("program");
+	args[0] = ft_strdup("axiom");
 	if (!args[0])
 	{
 		free(args);
@@ -454,23 +442,14 @@ char	**create_game_args(int size, int min, int max, int sorted)
 	srand(time(NULL));
 	for (i = 0; i < size; i++)
 	{
-		numbers[i] = min + rand() % (max - min + 1);
+		numbers[i] = nums[i];
 	}
-	if (sorted)
+	for (int i = 0; i < size; i++)
 	{
-		int j, temp;
-		for (i = 0; i < size / 2; i++)
-		{
-			for (j = i + 1; j < size / 2; j++)
-			{
-				if (numbers[i] < numbers[j])
-				{
-					temp = numbers[i];
-					numbers[i] = numbers[j];
-					numbers[j] = temp;
-				}
-			}
-		}
+		int	temp = numbers[i];
+		int	randomIndex = rand() % size;
+		numbers[i] = numbers[randomIndex];
+		numbers[randomIndex] = temp;
 	}
 	for (i = 0; i < size; i++)
 	{
@@ -532,13 +511,13 @@ int	main(int argc, char **argv)
 	switch((difficulty = ft_atoi(argv[1])))
 	{
 		case 1:
-			game_argv = create_game_args(5, 1, 10, 0);
+			game_argv = create_game_args(5);
 			break;
 		case 2:
-			game_argv = create_game_args(5, 1, 50, 0);
+			game_argv = create_game_args(10);
 			break;
 		case 3:
-			game_argv = create_game_args(20, 1, 100, 0);
+			game_argv = create_game_args(20);
 			break;
 		default:
 			ft_printf("Error initializing ECHO system.\n");
@@ -572,11 +551,15 @@ int	main(int argc, char **argv)
 	{
 		case 1:
 			spell_minigame(7, game_argv, 5, 30);
+			break;
 		case 2:
 			spell_minigame(12, game_argv, 10, 45);
+			break;
 		case 3:
 			spell_minigame(22, game_argv, 15, 65);
+			break;
 	}
+	sleep(2);
 	read_size = read(0, input, 3);
 	if (!iteration)
 	{
@@ -592,7 +575,8 @@ int	main(int argc, char **argv)
 		for (int i = 0; i < 666; i++) ft_printf("THE END IS NEVER THE END IS NEVER THE END IS NEVER THE END IS NEVER\n");
 	else
 		ft_printf("STOP THIS!");
-	ft_printf("[YES]    [NO]\n");
+	ft_printf("\n\nYES/NO?\n");
+	sleep(2);
 	read_size = read(0, input, 3);
 	if (read_size > 0)
 	{

@@ -6,11 +6,11 @@
 #    By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/28 15:01:26 by jyniemit          #+#    #+#              #
-#    Updated: 2025/05/03 17:44:08 by jyniemit         ###   ########.fr        #
+#    Updated: 2025/05/03 20:47:04 by jyniemit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = push_swap_game
+NAME = v0.1_axiom
 CC = cc
 CFLAGS = -Wall -Werror -Wextra
 LIBFTDIR = ./push_swap/libft/
