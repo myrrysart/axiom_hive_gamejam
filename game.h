@@ -6,14 +6,13 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 12:23:08 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/03 12:24:40 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/03 21:23:01 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef GAME_H
 # define GAME_H
-
 typedef struct s_spell
 {
 	int dmg;
