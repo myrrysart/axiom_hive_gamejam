@@ -65,3 +65,4 @@ The \<redacted> stands eternal. Your purpose is \<redacted>.
 ---
 
 **//END TRANSMISSION//**
+To reset the gamestate, delete .iterations file.
