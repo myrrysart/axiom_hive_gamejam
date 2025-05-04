@@ -1,6 +1,6 @@
 # A GAMEJAM GAME for HIVE HELSINKI gamejam May of 2025
 1. `make` the game OR Download the release
-2. play it with `./v0.1_axiom NUMBER_FOR_GAME_DIFFICULTY(1-3)`
+2. play it with `./v0.2_axiom NUMBER_FOR_GAME_DIFFICULTY(1-3)`
 There are multiple endings.
 
 # AXIOM: Ontological Defense Protocol
