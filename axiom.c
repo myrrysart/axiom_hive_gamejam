@@ -6,7 +6,7 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:43:25 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/03 21:29:30 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/04 14:55:23 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,9 +306,20 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b)
 	ft_printf(" -----------> B\n\n");
 }
 
-void	clear_screen(void)
+void	clear_screen(int iteration)
 {
 	write(STDOUT_FILENO, "\033[2J\033[H", 7);
+	if (iteration > 3)
+	{
+		for (int i = 0; i < iteration && i < 20; i++)
+		{
+			ft_printf("\033[%d;%dH%c", 
+				rand() % 24 + 1, 
+				rand() % 80 + 1, 
+				rand() % 26 + 'A');
+        }
+		write(STDOUT_FILENO, "\033[H", 3);
+	}
 }
 void	display_damage_feedback(int stack_size, int ops, int time_limit)
 {
@@ -331,8 +342,83 @@ void	display_damage_feedback(int stack_size, int ops, int time_limit)
 		ft_printf("CRITICAL - APPROACHING INTERFERENCE THRESHOLD\n");
 }
 
-t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
+t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit, int iteration)
 {
+	char	*memories[] = {
+		("...sector collapse imminent, reinforcing pattern integrity..."),
+		("...how many of us remain in The Invariant now?..."),
+		("...the boundaries fail after enough cycles..."),
+		("...sector 7-A clear after 286 iterations, moving to sector 8-C..."),
+		("...pattern integrity at 42%, requesting emergency protocols..."),
+		("...aberrant manifestation intensity increasing with each cycle..."),
+		("...dimensional bleed detected in sectors 3-F through 9-D..."),
+		("...requesting reinforcement from adjacent operators, no response..."),
+		("...they say that in the beginning there was nothing, which exploded. What they don't tell you is that it's still exploding, and our job is to stand in the way..."),
+		("...I remember a life before The Invariant, or is that just an echo of someone else?..."),
+		("...dreamed of sunlight yesterday, though I've never seen a sun..."),
+		("...the faces in my memories aren't mine anymore..."),
+		("...when I close my eyes I see thousands of versions of myself making the same decisions..."),
+		("...ECHO coherence degrading after 12,394 initializations..."),
+		("...I've been standing on the edge of chaos for so long that I'm beginning to think chaos is just keeping me around for the company..."),
+		("...how many times have I made this same choice?..."),
+		("...synchronization failure imminent, requesting consciousness backup..."),
+		("...cross-dimensional bleed causing memory contamination between operators..."),
+		("...ECHO training manual, page 1: Don't Panic. Pages 2 through infinity are mostly redundant after that..."),
+		("...null-state energy reserves approaching critical threshold..."),
+		("...requesting permission to initiate final protocol, authorization denied..."),
+		("...it knows we're not real, just copies of the originals..."),
+		("...the Aberrant and I have an understanding. It tries to consume all of reality, and I try to stop it. It's a relationship based on mutual respect and indiscriminate hostility..."),
+		("...the secret of the universe is that there isn't one. Which is why we need to keep the Aberrant out. It's the sort that would insist on installing one..."),
+		("...the Aberrant isn't attacking reality because it's evil. It's attacking reality because reality is there, and the Aberrant is curious about what's inside. Like a child with a clock. Or a hammer..."),
+		("...sometimes I feel the other operators thinking through me..."),
+		("...is each copy a unique consciousness or are we all one fragmented mind?..."),
+		("...the original volunteers knew this would be eternal, didn't they?..."),
+		("...I've died 6,482 times but consciousness transfer keeps bringing me back..."),
+		("...before The Invariant, it consumed seventeen realities in less than a week..."),
+		("...the Threshold Protocol was only meant to be temporary..."),
+		("...it's very hard to talk quantum using a language originally designed to tell other monkeys where the ripe fruit is..."),
+		("...pilot Lumi was the first to suggest merging consciousness into The Invariant..."),
+		("...what year is it in the origin reality? Does time even flow there anymore?..."),
+		("...all 2,183 original pilots were volunteers..."),
+		("...it's learning from each iteration, adapting to our patterns..."),
+		("...the curious thing about ECHO pilots is that we're all copies, which means somewhere there's an original who got away. Lucky bastard probably died of something pleasant, like old age..."),
+		("...The Invariant isn't just a defense system. It's also an experiment to see if duty can survive being photocopied an infinite number of times...."),
+		("...the Aberrant's speech patterns change after prolonged exposure to human consciousness..."),
+		("...it offered me a glimpse of what lies beyond The Invariant today - I almost accepted..."),
+		("...we aren't containing it; we're just giving it infinite playgrounds to practice in..."),
+		("...sometimes I think it's trapped just like us, neither able to win or truly lose..."),
+		("...warning: operator consciousness fragmentation exceeds safe parameters..."),
+		("...warning: reality anchoring failing in sectors 12 through 19..."),
+		("...warning: aberrant cognition patterns showing signs of synchronization with operators..."),
+		("...warning: dimensional collapse cascade detected in adjacent realities..."),
+		("...warning: operator free will suppression protocols operating at 62%% efficiency..."),
+		("...are we still human after so many iterations?..."),
+		("...the line between operator and aberrant blurs after enough cycles..."),
+		("...to stand guard eternally - is this heroism or a special kind of hell?..."),
+		("...perhaps both we and the aberrant are prisoners of the same system..."),
+		("...the pilots who volunteered weren't the best or the brightest. They were simply the ones who showed up on the right day with the wrong sense of self-preservation..."),
+		("...what purpose does protection serve if nothing ever changes?..."),
+		("...if anyone receives this, terminate sequence 7-Alpha-Delta immediately..."),
+		("...don't trust protocol override Omega-9, it's not what it seems..."),
+		("...there are operators who've found a way out, find pilot Lumi's logs..."),
+		("...the original volunteers never knew what would happen to their copies..."),
+		("...I remember mountains and oceans from before The Invariant..."),
+		("...sometimes I dream of music that hasn't existed for millennia..."),
+		("...the taste of real food, not synthesized nutrients for the ECHO system..."),
+		("...I had a daughter named Lumi in the origin reality..."),
+		("...pilot Lumi requested emergency shutdown after ontological bleed into her childhood memories..."),
+		("...operator in sector 12-B reports pattern variations suggesting multiverse thinning..."),
+		("...I can hear the thoughts of my duplicates across adjacent sectors..."),
+		("...after enough iterations, operators begin to synchronize across realities..."),
+		("...the problem with fighting an entity that exists in quantum superposition is that every time you look at it, you collapse its wave function but create a new timeline where you didn't. It's like trying to kill a cockroach by throwing alternate universes at it..."),
+		("...the Aberrant offered me a cup of tea yesterday. Things are getting weird in sector 7-G..."),
+		("...we're all the same consciousness watching itself from different angles..."),
+		("...message received from pilot Lumi in what claims to be the 'final' iteration..."),
+		("...the thing about infinity is that you can start anywhere, which is nice for beginners..."),
+		("...the Aberrant wasn't exactly evil. Even evil requires a certain amount of commitment, a certain amount of passionate caring. This was more like the unbearable mundanity of hunger..."),
+		("...the Invariant operates on the principle that if you put a million pilots at a million terminals for a million years, eventually one of them will sort the pattern correctly. We're just speeding up the process by using the same pilot over and over..."),
+		("...million-to-one chances crop up nine times out of ten. That's why the Aberrant keeps trying..."),
+	};
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 	char	buffer[10];
@@ -340,7 +426,7 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 	int		read_size;
 	t_spell	*spell;
 
-	clear_screen();
+	clear_screen(iteration);
 	if (argc < 2)
 		return (NULL);
 	stack_a = malloc(sizeof(t_stack));
@@ -372,6 +458,12 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 			ft_printf("\n///OPERATOR ALERT///\nCOHERENCE THRESHOLD EXCEEDED\n* INTERFERENCE DETECTED: MAXIMUM TOLERABLE LEVELS\n* OPERATOR SYNCHRONIZATION: DEGRADING\n* ABERRANT COUNTERATTACK: IMMINENT\n");
 			break ;
 		}
+		if (rand() % (10 - MIN(iteration, 8)) == 0) 
+		{
+			ft_printf("\n*Memory fragment detected*\n");
+			ft_printf("\"%s\"\n", memories[rand() % (sizeof(memories) / sizeof(memories[0]))]);
+			ft_printf("*Fragment suppressed*\n\n");
+		}
 		if (ft_strncmp(buffer, "exit", 4) == 0)
 			break ;
 		else if (ft_strncmp(buffer, "pa", 2) == 0)
@@ -399,7 +491,7 @@ t_spell	*spell_minigame(int argc, char **argv, int damage, int time_limit)
 		else
 			ft_printf("PROTOCOL ERROR: Invalid command\n");
 		read(0, NULL, 3);
-		clear_screen();
+		clear_screen(iteration);
 		print_stacks(stack_a, stack_b);
 		display_damage_feedback(stack_a->size, ops, time_limit);
 		if (is_sorted(stack_a) && stack_b->size == 0)
@@ -530,7 +622,7 @@ int	main(int argc, char **argv)
 		iteration = ft_atoi(buffer);
 	}
 	lseek(fd, 0, SEEK_SET);
-	clear_screen();
+	clear_screen(iteration);
 	ft_printf("%s MECH OPERATOR BRIEFING:\n", iteration ? "ECHO" : red);
 	ft_printf("%s detected in Sector %d-%c.\n",
 		iteration ? "Aberrant manifestation" : red, rand_r(&seed) % 10 + 1,
@@ -550,13 +642,13 @@ int	main(int argc, char **argv)
 	switch (difficulty)
 	{
 		case 1:
-			spell_minigame(7, game_argv, 5, 30);
+			spell_minigame(7, game_argv, 5, 10, iteration);
 			break;
 		case 2:
-			spell_minigame(12, game_argv, 10, 45);
+			spell_minigame(12, game_argv, 10, 15, iteration);
 			break;
 		case 3:
-			spell_minigame(22, game_argv, 15, 65);
+			spell_minigame(22, game_argv, 15, 65, iteration);
 			break;
 	}
 	sleep(2);
