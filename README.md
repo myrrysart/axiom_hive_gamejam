@@ -1,5 +1,5 @@
-A cosmic horror game played on terminal.
 ![Screenshot from 2025-05-05 09-08-52](https://github.com/user-attachments/assets/ea546313-777e-4155-8b58-43bd95505a72)
+###### A cosmic horror game played on terminal.
 
 # A GAMEJAM GAME for HIVE HELSINKI gamejam May of 2025
 1. `make` the game OR Download the release
