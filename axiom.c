@@ -6,7 +6,7 @@
 /*   By: jyniemit <jyniemit@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 17:43:25 by jyniemit          #+#    #+#             */
-/*   Updated: 2025/05/04 14:55:23 by jyniemit         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:50:38 by jyniemit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -645,10 +645,10 @@ int	main(int argc, char **argv)
 			spell_minigame(7, game_argv, 5, 10, iteration);
 			break;
 		case 2:
-			spell_minigame(12, game_argv, 10, 15, iteration);
+			spell_minigame(12, game_argv, 10, 25, iteration);
 			break;
 		case 3:
-			spell_minigame(22, game_argv, 15, 65, iteration);
+			spell_minigame(22, game_argv, 15, 154, iteration);
 			break;
 	}
 	sleep(2);
